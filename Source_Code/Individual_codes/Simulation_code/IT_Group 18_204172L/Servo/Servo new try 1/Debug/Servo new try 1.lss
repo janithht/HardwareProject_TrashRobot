@@ -1,0 +1,235 @@
+
+Servo new try 1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000108  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000015c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000015c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000018c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  000001c8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000007bc  00000000  00000000  000001e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000005a9  00000000  00000000  000009a4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000002fc  00000000  00000000  00000f4d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  0000124c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000033e  00000000  00000000  00001270  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000001f0  00000000  00000000  000015ae  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  0000179e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
+  64:	0c 94 82 00 	jmp	0x104	; 0x104 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <main>:
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+	DDRB = 0xff;
+  6c:	8f ef       	ldi	r24, 0xFF	; 255
+  6e:	87 bb       	out	0x17, r24	; 23
+	PORTB= 0x00;	/* Make OC0 pin as output */
+  70:	18 ba       	out	0x18, r1	; 24
+	DDRD = 0xff;
+  72:	81 bb       	out	0x11, r24	; 17
+	PORTD= 0x00;
+  74:	12 ba       	out	0x12, r1	; 18
+    
+
+   
+    while (1) 
+    {
+		PORTB = 0x08;
+  76:	88 e0       	ldi	r24, 0x08	; 8
+  78:	88 bb       	out	0x18, r24	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  7a:	ef e9       	ldi	r30, 0x9F	; 159
+  7c:	ff e0       	ldi	r31, 0x0F	; 15
+  7e:	31 97       	sbiw	r30, 0x01	; 1
+  80:	f1 f7       	brne	.-4      	; 0x7e <main+0x12>
+  82:	00 c0       	rjmp	.+0      	; 0x84 <main+0x18>
+  84:	00 00       	nop
+		_delay_us(1000);
+		PORTB = 0x00;
+  86:	18 ba       	out	0x18, r1	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  88:	ff ef       	ldi	r31, 0xFF	; 255
+  8a:	27 ea       	ldi	r18, 0xA7	; 167
+  8c:	31 e6       	ldi	r19, 0x61	; 97
+  8e:	f1 50       	subi	r31, 0x01	; 1
+  90:	20 40       	sbci	r18, 0x00	; 0
+  92:	30 40       	sbci	r19, 0x00	; 0
+  94:	e1 f7       	brne	.-8      	; 0x8e <main+0x22>
+  96:	00 c0       	rjmp	.+0      	; 0x98 <main+0x2c>
+  98:	00 00       	nop
+		_delay_ms(2000);
+		
+		
+		PORTB = 0x08;
+  9a:	88 bb       	out	0x18, r24	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  9c:	8f e0       	ldi	r24, 0x0F	; 15
+  9e:	97 e2       	ldi	r25, 0x27	; 39
+  a0:	01 97       	sbiw	r24, 0x01	; 1
+  a2:	f1 f7       	brne	.-4      	; 0xa0 <main+0x34>
+  a4:	00 c0       	rjmp	.+0      	; 0xa6 <main+0x3a>
+  a6:	00 00       	nop
+		_delay_us(2500);
+		PORTB = 0x00;
+  a8:	18 ba       	out	0x18, r1	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  aa:	9f ef       	ldi	r25, 0xFF	; 255
+  ac:	e7 ea       	ldi	r30, 0xA7	; 167
+  ae:	f1 e6       	ldi	r31, 0x61	; 97
+  b0:	91 50       	subi	r25, 0x01	; 1
+  b2:	e0 40       	sbci	r30, 0x00	; 0
+  b4:	f0 40       	sbci	r31, 0x00	; 0
+  b6:	e1 f7       	brne	.-8      	; 0xb0 <main+0x44>
+  b8:	00 c0       	rjmp	.+0      	; 0xba <main+0x4e>
+  ba:	00 00       	nop
+		_delay_ms(2000);
+		
+		
+		
+		PORTD= 0x80;
+  bc:	80 e8       	ldi	r24, 0x80	; 128
+  be:	82 bb       	out	0x12, r24	; 18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  c0:	ef e9       	ldi	r30, 0x9F	; 159
+  c2:	ff e0       	ldi	r31, 0x0F	; 15
+  c4:	31 97       	sbiw	r30, 0x01	; 1
+  c6:	f1 f7       	brne	.-4      	; 0xc4 <main+0x58>
+  c8:	00 c0       	rjmp	.+0      	; 0xca <main+0x5e>
+  ca:	00 00       	nop
+		_delay_us(1000);
+		PORTD= 0x00;
+  cc:	12 ba       	out	0x12, r1	; 18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  ce:	ff ef       	ldi	r31, 0xFF	; 255
+  d0:	27 ea       	ldi	r18, 0xA7	; 167
+  d2:	31 e6       	ldi	r19, 0x61	; 97
+  d4:	f1 50       	subi	r31, 0x01	; 1
+  d6:	20 40       	sbci	r18, 0x00	; 0
+  d8:	30 40       	sbci	r19, 0x00	; 0
+  da:	e1 f7       	brne	.-8      	; 0xd4 <main+0x68>
+  dc:	00 c0       	rjmp	.+0      	; 0xde <main+0x72>
+  de:	00 00       	nop
+		_delay_ms(2000);
+		
+		
+		PORTD  = 0x80;
+  e0:	82 bb       	out	0x12, r24	; 18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  e2:	8f e0       	ldi	r24, 0x0F	; 15
+  e4:	97 e2       	ldi	r25, 0x27	; 39
+  e6:	01 97       	sbiw	r24, 0x01	; 1
+  e8:	f1 f7       	brne	.-4      	; 0xe6 <main+0x7a>
+  ea:	00 c0       	rjmp	.+0      	; 0xec <main+0x80>
+  ec:	00 00       	nop
+		_delay_us(2500);
+		PORTD  = 0x00;
+  ee:	12 ba       	out	0x12, r1	; 18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  f0:	9f ef       	ldi	r25, 0xFF	; 255
+  f2:	e7 ea       	ldi	r30, 0xA7	; 167
+  f4:	f1 e6       	ldi	r31, 0x61	; 97
+  f6:	91 50       	subi	r25, 0x01	; 1
+  f8:	e0 40       	sbci	r30, 0x00	; 0
+  fa:	f0 40       	sbci	r31, 0x00	; 0
+  fc:	e1 f7       	brne	.-8      	; 0xf6 <main+0x8a>
+  fe:	00 c0       	rjmp	.+0      	; 0x100 <main+0x94>
+ 100:	00 00       	nop
+ 102:	b9 cf       	rjmp	.-142    	; 0x76 <main+0xa>
+
+00000104 <_exit>:
+ 104:	f8 94       	cli
+
+00000106 <__stop_program>:
+ 106:	ff cf       	rjmp	.-2      	; 0x106 <__stop_program>

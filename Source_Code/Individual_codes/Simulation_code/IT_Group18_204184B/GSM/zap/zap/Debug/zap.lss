@@ -1,0 +1,329 @@
+
+zap.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001bc  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000044  00800060  000001bc  00000230  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000274  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002a4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000048  00000000  00000000  000002e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000008cc  00000000  00000000  00000328  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000005de  00000000  00000000  00000bf4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000035f  00000000  00000000  000011d2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000094  00000000  00000000  00001534  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000317  00000000  00000000  000015c8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000121  00000000  00000000  000018df  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000038  00000000  00000000  00001a00  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ec eb       	ldi	r30, 0xBC	; 188
+  68:	f1 e0       	ldi	r31, 0x01	; 1
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a4 3a       	cpi	r26, 0xA4	; 164
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 d6 00 	call	0x1ac	; 0x1ac <main>
+  7a:	0c 94 dc 00 	jmp	0x1b8	; 0x1b8 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <delay_ms>:
+}
+
+void delay_ms(unsigned int de)
+{
+	unsigned int rr,rr1;
+	for (rr=0;rr<de;rr++)
+  82:	40 e0       	ldi	r20, 0x00	; 0
+  84:	50 e0       	ldi	r21, 0x00	; 0
+  86:	0b c0       	rjmp	.+22     	; 0x9e <delay_ms+0x1c>
+	{
+		
+		for(rr1=0;rr1<30;rr1++)  
+		{
+			asm("nop");
+  88:	00 00       	nop
+{
+	unsigned int rr,rr1;
+	for (rr=0;rr<de;rr++)
+	{
+		
+		for(rr1=0;rr1<30;rr1++)  
+  8a:	2f 5f       	subi	r18, 0xFF	; 255
+  8c:	3f 4f       	sbci	r19, 0xFF	; 255
+  8e:	02 c0       	rjmp	.+4      	; 0x94 <delay_ms+0x12>
+  90:	20 e0       	ldi	r18, 0x00	; 0
+  92:	30 e0       	ldi	r19, 0x00	; 0
+  94:	2e 31       	cpi	r18, 0x1E	; 30
+  96:	31 05       	cpc	r19, r1
+  98:	b8 f3       	brcs	.-18     	; 0x88 <delay_ms+0x6>
+}
+
+void delay_ms(unsigned int de)
+{
+	unsigned int rr,rr1;
+	for (rr=0;rr<de;rr++)
+  9a:	4f 5f       	subi	r20, 0xFF	; 255
+  9c:	5f 4f       	sbci	r21, 0xFF	; 255
+  9e:	48 17       	cp	r20, r24
+  a0:	59 07       	cpc	r21, r25
+  a2:	b0 f3       	brcs	.-20     	; 0x90 <delay_ms+0xe>
+		{
+			asm("nop");
+		}
+		
+	}
+}
+  a4:	08 95       	ret
+
+000000a6 <USART_Transmit>:
+
+
+void USART_Transmit(char data )
+{
+	UDR = data;
+  a6:	8c b9       	out	0x0c, r24	; 12
+	/* Wait for empty transmit buffer */
+	while ( !( UCSRA & (1<<UDRE)) )
+  a8:	5d 9b       	sbis	0x0b, 5	; 11
+  aa:	fe cf       	rjmp	.-4      	; 0xa8 <USART_Transmit+0x2>
+	;
+	/* Put data into buffer, sends the data */
+}
+  ac:	08 95       	ret
+
+000000ae <senddata>:
+
+void senddata(char string[16])
+{
+  ae:	ef 92       	push	r14
+  b0:	ff 92       	push	r15
+  b2:	0f 93       	push	r16
+  b4:	1f 93       	push	r17
+  b6:	cf 93       	push	r28
+  b8:	df 93       	push	r29
+  ba:	7c 01       	movw	r14, r24
+	int len,count;
+	len = strlen(string);
+  bc:	fc 01       	movw	r30, r24
+  be:	01 90       	ld	r0, Z+
+  c0:	00 20       	and	r0, r0
+  c2:	e9 f7       	brne	.-6      	; 0xbe <senddata+0x10>
+  c4:	31 97       	sbiw	r30, 0x01	; 1
+  c6:	8f 01       	movw	r16, r30
+  c8:	08 1b       	sub	r16, r24
+  ca:	19 0b       	sbc	r17, r25
+
+	for (count=0;count<len;count++)
+  cc:	c0 e0       	ldi	r28, 0x00	; 0
+  ce:	d0 e0       	ldi	r29, 0x00	; 0
+  d0:	07 c0       	rjmp	.+14     	; 0xe0 <senddata+0x32>
+	{
+		USART_Transmit(string[count]);
+  d2:	f7 01       	movw	r30, r14
+  d4:	ec 0f       	add	r30, r28
+  d6:	fd 1f       	adc	r31, r29
+  d8:	80 81       	ld	r24, Z
+  da:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+void senddata(char string[16])
+{
+	int len,count;
+	len = strlen(string);
+
+	for (count=0;count<len;count++)
+  de:	21 96       	adiw	r28, 0x01	; 1
+  e0:	c0 17       	cp	r28, r16
+  e2:	d1 07       	cpc	r29, r17
+  e4:	b4 f3       	brlt	.-20     	; 0xd2 <senddata+0x24>
+	{
+		USART_Transmit(string[count]);
+	}
+}
+  e6:	df 91       	pop	r29
+  e8:	cf 91       	pop	r28
+  ea:	1f 91       	pop	r17
+  ec:	0f 91       	pop	r16
+  ee:	ff 90       	pop	r15
+  f0:	ef 90       	pop	r14
+  f2:	08 95       	ret
+
+000000f4 <sendSMS>:
+
+
+
+void sendSMS()
+{
+	senddata("AT+CMGD=1");
+  f4:	80 e6       	ldi	r24, 0x60	; 96
+  f6:	90 e0       	ldi	r25, 0x00	; 0
+  f8:	0e 94 57 00 	call	0xae	; 0xae <senddata>
+	USART_Transmit(13);
+  fc:	8d e0       	ldi	r24, 0x0D	; 13
+  fe:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	USART_Transmit(10);
+ 102:	8a e0       	ldi	r24, 0x0A	; 10
+ 104:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	delay_ms(1000);
+ 108:	88 ee       	ldi	r24, 0xE8	; 232
+ 10a:	93 e0       	ldi	r25, 0x03	; 3
+ 10c:	0e 94 41 00 	call	0x82	; 0x82 <delay_ms>
+	
+	senddata("AT+CMGF=1");
+ 110:	8a e6       	ldi	r24, 0x6A	; 106
+ 112:	90 e0       	ldi	r25, 0x00	; 0
+ 114:	0e 94 57 00 	call	0xae	; 0xae <senddata>
+	USART_Transmit(13);
+ 118:	8d e0       	ldi	r24, 0x0D	; 13
+ 11a:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	USART_Transmit(10);
+ 11e:	8a e0       	ldi	r24, 0x0A	; 10
+ 120:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	delay_ms(1000);
+ 124:	88 ee       	ldi	r24, 0xE8	; 232
+ 126:	93 e0       	ldi	r25, 0x03	; 3
+ 128:	0e 94 41 00 	call	0x82	; 0x82 <delay_ms>
+	
+	senddata("AT+CMGW=");
+ 12c:	84 e7       	ldi	r24, 0x74	; 116
+ 12e:	90 e0       	ldi	r25, 0x00	; 0
+ 130:	0e 94 57 00 	call	0xae	; 0xae <senddata>
+	USART_Transmit(34);
+ 134:	82 e2       	ldi	r24, 0x22	; 34
+ 136:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	senddata("+919812345678");  //Enter Your Mobile number
+ 13a:	8d e7       	ldi	r24, 0x7D	; 125
+ 13c:	90 e0       	ldi	r25, 0x00	; 0
+ 13e:	0e 94 57 00 	call	0xae	; 0xae <senddata>
+	USART_Transmit(34);
+ 142:	82 e2       	ldi	r24, 0x22	; 34
+ 144:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	USART_Transmit(13);
+ 148:	8d e0       	ldi	r24, 0x0D	; 13
+ 14a:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	USART_Transmit(10);
+ 14e:	8a e0       	ldi	r24, 0x0A	; 10
+ 150:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	delay_ms(1000);
+ 154:	88 ee       	ldi	r24, 0xE8	; 232
+ 156:	93 e0       	ldi	r25, 0x03	; 3
+ 158:	0e 94 41 00 	call	0x82	; 0x82 <delay_ms>
+	
+	senddata("Robot is here");
+ 15c:	8b e8       	ldi	r24, 0x8B	; 139
+ 15e:	90 e0       	ldi	r25, 0x00	; 0
+ 160:	0e 94 57 00 	call	0xae	; 0xae <senddata>
+	USART_Transmit(13);
+ 164:	8d e0       	ldi	r24, 0x0D	; 13
+ 166:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	USART_Transmit(10);
+ 16a:	8a e0       	ldi	r24, 0x0A	; 10
+ 16c:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	delay_ms(1000);
+ 170:	88 ee       	ldi	r24, 0xE8	; 232
+ 172:	93 e0       	ldi	r25, 0x03	; 3
+ 174:	0e 94 41 00 	call	0x82	; 0x82 <delay_ms>
+
+	USART_Transmit(26); //Cntrl+Z
+ 178:	8a e1       	ldi	r24, 0x1A	; 26
+ 17a:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	delay_ms(1000);
+ 17e:	88 ee       	ldi	r24, 0xE8	; 232
+ 180:	93 e0       	ldi	r25, 0x03	; 3
+ 182:	0e 94 41 00 	call	0x82	; 0x82 <delay_ms>
+	delay_ms(1000);
+ 186:	88 ee       	ldi	r24, 0xE8	; 232
+ 188:	93 e0       	ldi	r25, 0x03	; 3
+ 18a:	0e 94 41 00 	call	0x82	; 0x82 <delay_ms>
+
+	senddata("AT+CMSS=1");
+ 18e:	89 e9       	ldi	r24, 0x99	; 153
+ 190:	90 e0       	ldi	r25, 0x00	; 0
+ 192:	0e 94 57 00 	call	0xae	; 0xae <senddata>
+	USART_Transmit(13);
+ 196:	8d e0       	ldi	r24, 0x0D	; 13
+ 198:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	USART_Transmit(10);
+ 19c:	8a e0       	ldi	r24, 0x0A	; 10
+ 19e:	0e 94 53 00 	call	0xa6	; 0xa6 <USART_Transmit>
+	delay_ms(1000);
+ 1a2:	88 ee       	ldi	r24, 0xE8	; 232
+ 1a4:	93 e0       	ldi	r25, 0x03	; 3
+ 1a6:	0e 94 41 00 	call	0x82	; 0x82 <delay_ms>
+ 1aa:	08 95       	ret
+
+000001ac <main>:
+void USART_Init();
+void delay_ms(unsigned int de);
+void sendSMS();
+
+int main(){
+	DDRC = 0x01;
+ 1ac:	81 e0       	ldi	r24, 0x01	; 1
+ 1ae:	84 bb       	out	0x14, r24	; 20
+	sei();
+ 1b0:	78 94       	sei
+	
+	
+	while (1)
+	{
+		sendSMS();
+ 1b2:	0e 94 7a 00 	call	0xf4	; 0xf4 <sendSMS>
+ 1b6:	fd cf       	rjmp	.-6      	; 0x1b2 <main+0x6>
+
+000001b8 <_exit>:
+ 1b8:	f8 94       	cli
+
+000001ba <__stop_program>:
+ 1ba:	ff cf       	rjmp	.-2      	; 0x1ba <__stop_program>
